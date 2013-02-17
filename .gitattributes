@@ -1,0 +1,15 @@
+* text=auto !eol
+/INSTALL.CxxTest -text
+/Makefile.am -text
+/Makefile.in -text
+/coincxxtest-uninstalled.pc.in -text
+/coincxxtest.pc.in -text
+/config.guess -text
+/config.sub -text
+/configure -text
+/configure.ac -text
+/depcomp -text
+/get.CxxTest -text
+/install-sh -text
+/ltmain.sh -text
+/missing -text

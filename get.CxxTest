@@ -1,0 +1,58 @@
+#!/bin/sh
+
+set -e
+cxxtest_ver=4.1
+
+wgetcmd=wget
+wgetcount=`which wget 2>/dev/null | wc -l`
+if test ! $wgetcount = 1; then
+  echo "Utility wget not found in your PATH."
+  if test `uname` = Darwin; then
+    wgetcmd=ftp
+    echo "Using ftp command instead."
+  elif test `uname` = FreeBSD; then
+    wgetcmd=fetch
+    echo "Using fetch command instead."
+  else
+    exit -1
+  fi
+fi
+
+echo " "
+echo "Running script to download the source code for CxxTest $cxxtest_ver."
+echo " "
+
+rm -rf cxxtest*
+
+cxxtestlink="http://downloads.sourceforge.net/project/cxxtest/cxxtest/${cxxtest_ver}/cxxtest-${cxxtest_ver}.tar.gz"
+
+echo "Downloading the source code from sourceforge.net/projects/cxxtest ..."
+$wgetcmd $cxxtestlink
+
+echo "Uncompressing the tarball..."
+gunzip -f cxxtest-${cxxtest_ver}.tar.gz
+
+if test -d cxxtest ; then
+  echo "Moving current cxxtest to cxxtest.OLD."
+  if test -d cxxtest.OLD ; then
+    rm -rf cxxtest.OLD
+  fi
+  mv cxxtest cxxtest.OLD
+fi
+
+echo "Unpacking the source code..."
+tar xf cxxtest-${cxxtest_ver}.tar
+
+echo "Deleting the tar file..."
+rm cxxtest-${cxxtest_ver}.tar
+
+if test ! -d cxxtest ; then
+  mv cxxtest-${cxxtest_ver} cxxtest
+fi
+
+echo " "
+echo "Done downloading the source code for CxxTest."
+
+echo " "
+echo "Verify that there are no error message in the output above."
+
