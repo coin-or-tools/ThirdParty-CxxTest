@@ -1,0 +1,23 @@
+
+ 130217
+
+ This is the first attempt at providing support for the CxxTest C++ unit test
+ framework as ThirdParty software. The developers of Osi2 are thinking of
+ using it for testing.
+
+ USE AT YOUR OWN RISK
+
+ CxxTest runs a python script, cxxtestgen, that creates the source (.cpp)
+ file for a unit test driver. In order to create this driver, it scans source
+ files containing test methods for the code to be tested and integrates what
+ it finds with boilerplate that comes with the CxxTest distribution. So it's a
+ bit different from other ThirdParty codes.
+
+ As currently configured,
+   * cxxtestgen is installed in <builddir>/bin
+   * the boilerplate is copied into <builddir>/include/cxxtest
+   * the various python modules are copied into <builddir>/lib (this is
+     almost certainly wrong and likely to change very soon)
+
+ -- lh --
+

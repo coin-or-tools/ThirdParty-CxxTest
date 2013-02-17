@@ -2,6 +2,7 @@
 /INSTALL.CxxTest -text
 /Makefile.am -text
 /Makefile.in -text
+/WARNING -text
 /coincxxtest-uninstalled.pc.in -text
 /coincxxtest.pc.in -text
 /config.guess -text

@@ -20,5 +20,6 @@ and unpack it in this directory:
 gunzip cxxtest-4.1.tar.gz
 tar xf cxxtest-4.1.tar
 
-Rename the resulting directory to cxxtest (remove the version number).
+This will unpack into cxxtest-4.1. Rename the resulting directory to cxxtest
+(remove the version number).
 
