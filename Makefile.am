@@ -18,13 +18,19 @@ pkgconfiglib_DATA = coincxxtest.pc
 cxxincdir = $(includedir)/coin/ThirdParty/cxxtest
 cxxinc_DATA = $(CXXTESTHDRS)
 
-# Install cxxtestgen in the bin directory
+# Install cxxtestgen in the bin directory. The hook will edit it so that it
+# can find its modules in libdir/cxxtest/python.
 
 bin_SCRIPTS = cxxtest/bin/cxxtestgen
+
+install-exec-hook:
+	cd $(bindir) && \
+	sed -i -e "/sys.path.insert/s/os.sep/os.sep+'lib'+os.sep+'cxxtest'+os.sep/" cxxtestgen
 
 # Copy the cxxtest/python subdirectory into $(libdir)/cxxtest
 
 install-exec-local:
+	$(INSTALL) -d $(libdir)/cxxtest
 	cp -r $(srcdir)/cxxtest/python $(libdir)/cxxtest
 
 uninstall-local:

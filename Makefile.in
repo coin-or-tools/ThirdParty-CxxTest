@@ -244,7 +244,8 @@ pkgconfiglib_DATA = coincxxtest.pc
 cxxincdir = $(includedir)/coin/ThirdParty/cxxtest
 cxxinc_DATA = $(CXXTESTHDRS)
 
-# Install cxxtestgen in the bin directory
+# Install cxxtestgen in the bin directory. The hook will edit it so that it
+# can find its modules in libdir/cxxtest/python.
 bin_SCRIPTS = cxxtest/bin/cxxtestgen
 
 # Must be set, even if empty
@@ -542,6 +543,8 @@ info-am:
 install-data-am: install-cxxincDATA install-pkgconfiglibDATA
 
 install-exec-am: install-binSCRIPTS install-exec-local
+	@$(NORMAL_INSTALL)
+	$(MAKE) $(AM_MAKEFLAGS) install-exec-hook
 
 install-info: install-info-am
 
@@ -576,7 +579,7 @@ uninstall-am: uninstall-binSCRIPTS uninstall-cxxincDATA \
 	distclean-libtool distcleancheck distdir distuninstallcheck \
 	dvi dvi-am html html-am info info-am install install-am \
 	install-binSCRIPTS install-cxxincDATA install-data \
-	install-data-am install-exec install-exec-am \
+	install-data-am install-exec install-exec-am install-exec-hook \
 	install-exec-local install-info install-info-am install-man \
 	install-pkgconfiglibDATA install-strip installcheck \
 	installcheck-am installdirs maintainer-clean \
@@ -586,9 +589,14 @@ uninstall-am: uninstall-binSCRIPTS uninstall-cxxincDATA \
 	uninstall-local uninstall-pkgconfiglibDATA
 
 
+install-exec-hook:
+	cd $(bindir) && \
+	sed -i -e "/sys.path.insert/s/os.sep/os.sep+'lib'+os.sep+'cxxtest'+os.sep/" cxxtestgen
+
 # Copy the cxxtest/python subdirectory into $(libdir)/cxxtest
 
 install-exec-local:
+	$(INSTALL) -d $(libdir)/cxxtest
 	cp -r $(srcdir)/cxxtest/python $(libdir)/cxxtest
 
 uninstall-local:
