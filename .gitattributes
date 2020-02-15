@@ -1,5 +1,6 @@
 * text=auto !eol
 /INSTALL.CxxTest -text
+/LICENSE -text
 /Makefile.am -text
 /Makefile.in -text
 /WARNING -text
